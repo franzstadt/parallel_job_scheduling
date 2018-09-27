@@ -1,5 +1,4 @@
 #include "Parallel_job_scheduling.h"
-#include <QLineEdit>
 #include <string>
 #include "Scheduler.h"
 #include <stack>
