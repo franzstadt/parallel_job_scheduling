@@ -10,6 +10,10 @@ class Parallel_job_scheduling : public QMainWindow
 public:
 	Parallel_job_scheduling(QWidget *parent = Q_NULLPTR);
 
+public slots:
+	void Start();
+
+
 private:
 	Ui::Parallel_job_schedulingClass ui;
 };
