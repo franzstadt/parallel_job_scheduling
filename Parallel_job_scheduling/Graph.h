@@ -6,9 +6,11 @@ class Graph
 {
 	int m_vertices_count;
 	std::vector<std::vector<int>> m_adjacency_list;
+	std::vector<std::vector<int>> m_predecessors;
 public:
-	Graph(int vertices) : m_vertices_count(vertices), m_adjacency_list(vertices) {}
+	Graph(int vertices);
 	void AddEdge(const Edge& edge);
 	int GetVerticesCount() const;
-	std::vector<int> GetVertices(int vertex) const;
+	const std::vector<int>& GetVertices(int vertex) const;
+	const std::vector<int>& GetPredecessor(int vertex) const;
 };

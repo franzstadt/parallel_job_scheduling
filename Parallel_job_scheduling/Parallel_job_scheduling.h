@@ -12,6 +12,7 @@ public:
 
 public slots:
 	void Start();
+	void LoadGraphFromFile();
 
 
 private:
