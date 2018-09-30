@@ -5,10 +5,12 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QTextStream>
+#include <vector>
 
 using std::string;
 using std::stack;
 using std::stringstream;
+using std::vector;
 
 Parallel_job_scheduling::Parallel_job_scheduling(QWidget *parent)
 	: QMainWindow(parent)
@@ -101,7 +103,7 @@ void Parallel_job_scheduling::Start()
 				{
 					Scheduler scheduler;
 					stack<int> topological_sort = scheduler.CalculateTopologicalSort(graph);
-
+					vector<vector<int>> topological_sort2 = scheduler.KahnsTopologicalSort(graph);
 					QString output = "Topological sort:\n";
 					while (!topological_sort.empty())
 					{
@@ -109,6 +111,14 @@ void Parallel_job_scheduling::Start()
 						topological_sort.pop();
 					}
 
+					output += "Kahn's topological sort:\n";
+					for (int j = 0;j<topological_sort2.size();j++)
+					{
+						output += "Layer "+QString::number(j)+": ";
+						for (int k = 0; k<topological_sort2[j].size(); k++)
+							output += QString::number(topological_sort2[j][k]) + " ";
+						output += "\n";
+					}
 					output += "\nPredecessors:\n";
 					for (int v = 0; v < number_of_vertices; v++)
 					{
