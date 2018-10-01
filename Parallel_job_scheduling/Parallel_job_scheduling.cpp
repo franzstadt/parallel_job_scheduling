@@ -102,16 +102,9 @@ void Parallel_job_scheduling::Start()
 				if (!has_error)
 				{
 					Scheduler scheduler;
-					stack<int> topological_sort = scheduler.CalculateTopologicalSort(graph);
-					vector<vector<int>> topological_sort2 = scheduler.KahnsTopologicalSort(graph);
-					QString output = "Topological sort:\n";
-					while (!topological_sort.empty())
-					{
-						output += QString::number(topological_sort.top()) + " ";
-						topological_sort.pop();
-					}
-
-					output += "Kahn's topological sort:\n";
+					vector<vector<int>> topological_sort2 = scheduler.CalculateComputationalGraph(graph);
+					QString output = "Computational Graph:\n";
+					
 					for (int j = 0;j<topological_sort2.size();j++)
 					{
 						output += "Layer "+QString::number(j)+": ";
@@ -119,16 +112,7 @@ void Parallel_job_scheduling::Start()
 							output += QString::number(topological_sort2[j][k]) + " ";
 						output += "\n";
 					}
-					output += "\nPredecessors:\n";
-					for (int v = 0; v < number_of_vertices; v++)
-					{
-						output += "Node: " + QString::number(v) + " Predecessors: ";
-						for (const auto& node : graph.GetPredecessor(v))
-						{
-							output += QString::number(node) + " ";
-						}
-						output += "\n";
-					}
+
 					ui.output_text_edit->setText(output);
 				}
 			}
@@ -156,6 +140,7 @@ void Parallel_job_scheduling::LoadGraphFromFile()
 		}
 
 		ui.input_text_edit->clear();
+		ui.output_text_edit->clear();
 
 		QTextStream stream(&file);
 		while (!stream.atEnd())
