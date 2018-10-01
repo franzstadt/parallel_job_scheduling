@@ -94,9 +94,7 @@ void Parallel_job_scheduling::Start()
 						break;
 					}
 
-					Edge edge;
-					edge.from = first.toInt();
-					edge.to = second.toInt();
+					Edge edge(first.toInt(), second.toInt());
 					graph.AddEdge(edge);
 				}
 				if (!has_error)
