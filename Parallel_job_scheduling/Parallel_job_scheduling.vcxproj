@@ -179,12 +179,14 @@
     <QtRcc Include="Parallel_job_scheduling.qrc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Edge.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Scheduler.h" />
   </ItemGroup>
   <ItemGroup>
+    <Text Include="expected0.txt" />
+    <Text Include="expected1.txt" />
+    <Text Include="expected2.txt" />
     <Text Include="input0.txt" />
     <Text Include="input1.txt" />
     <Text Include="input2.txt" />

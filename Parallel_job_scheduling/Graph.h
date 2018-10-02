@@ -1,5 +1,4 @@
 #pragma once
-#include "Edge.h"
 #include <vector>
 
 class Graph
@@ -8,7 +7,7 @@ class Graph
 	std::vector<std::vector<int>> m_adjacency_list;
 public:
 	Graph(int vertices);
-	void AddEdge(const Edge& edge);
+	void AddEdge(int from, int to);
 	int GetVerticesCount() const;
 	const std::vector<int>& GetVertices(int vertex) const;
 };

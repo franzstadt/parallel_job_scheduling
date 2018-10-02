@@ -4,17 +4,18 @@ using std::vector;
 
 Graph::Graph(int vertices) : m_vertices_count(vertices), m_adjacency_list(vertices)
 {
+	
 	if (vertices < 1)
 		throw std::range_error("out of range");
 }
 
-void Graph::AddEdge(const Edge & edge)
+void Graph::AddEdge(int from, int to)
 {
-	if (edge.from > m_vertices_count || edge.from < 0 ||
-		edge.to > m_vertices_count || edge.to < 0)
+	if (from >= m_vertices_count || from < 0 ||
+		to >= m_vertices_count || to < 0)
 		throw std::range_error("out of range");
 
-	m_adjacency_list[edge.from].push_back(edge.to);
+	m_adjacency_list[from].push_back(to);
 }
 
 int Graph::GetVerticesCount() const
