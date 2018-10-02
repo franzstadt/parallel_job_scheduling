@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>475</width>
-    <height>338</height>
+    <width>518</width>
+    <height>339</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,31 +19,15 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>471</width>
+      <width>511</width>
       <height>285</height>
      </rect>
     </property>
     <layout class="QGridLayout" name="gridLayout">
-     <item row="2" column="0">
-      <widget class="QFrame" name="frame">
-       <property name="minimumSize">
-        <size>
-         <width>380</width>
-         <height>100</height>
-        </size>
-       </property>
-       <property name="frameShape">
-        <enum>QFrame::StyledPanel</enum>
-       </property>
-       <property name="frameShadow">
-        <enum>QFrame::Raised</enum>
-       </property>
-      </widget>
-     </item>
      <item row="1" column="0">
       <widget class="QTextEdit" name="input_text_edit"/>
      </item>
-     <item row="3" column="0">
+     <item row="2" column="0">
       <widget class="QTextEdit" name="output_text_edit">
        <property name="readOnly">
         <bool>true</bool>
@@ -55,18 +39,25 @@
        <item>
         <widget class="QPushButton" name="open_file_btn">
          <property name="text">
-          <string>Open File</string>
+          <string>Read Input Graph From File</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="pushButton">
          <property name="text">
-          <string>Start</string>
+          <string>Calculate Computational Graph</string>
          </property>
         </widget>
        </item>
       </layout>
+     </item>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="clear_fields">
+       <property name="text">
+        <string>Clear Fields</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
@@ -76,7 +67,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>475</width>
+     <width>518</width>
      <height>21</height>
     </rect>
    </property>

@@ -18,6 +18,7 @@ Parallel_job_scheduling::Parallel_job_scheduling(QWidget *parent)
 	ui.setupUi(this);
 	connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(Start()));
 	connect(ui.open_file_btn, SIGNAL(clicked()), this, SLOT(LoadGraphFromFile()));
+	connect(ui.clear_fields, SIGNAL(clicked()), this, SLOT(ClearFileds()));
 }
 
 void Parallel_job_scheduling::Start()
@@ -31,8 +32,6 @@ void Parallel_job_scheduling::Start()
 
 		QRegExp re("\\d*");
 	
-		
-
 		if (!re.exactMatch(lines[0]))
 			ui.output_text_edit->setText("The first line should define the numer of vertices! It must be digit!");
 		else
