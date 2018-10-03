@@ -44,6 +44,8 @@ public:
         if (Parallel_job_schedulingClass->objectName().isEmpty())
             Parallel_job_schedulingClass->setObjectName(QStringLiteral("Parallel_job_schedulingClass"));
         Parallel_job_schedulingClass->resize(518, 339);
+        Parallel_job_schedulingClass->setMinimumSize(QSize(518, 339));
+        Parallel_job_schedulingClass->setMaximumSize(QSize(518, 339));
         centralWidget = new QWidget(Parallel_job_schedulingClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayoutWidget = new QWidget(centralWidget);
