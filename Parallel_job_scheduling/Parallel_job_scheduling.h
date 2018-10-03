@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_Parallel_job_scheduling.h"
+#include "Graph.h"
 
 class Parallel_job_scheduling : public QMainWindow
 {
@@ -15,7 +16,8 @@ public slots:
 	void ClearFields();
 	void LoadGraphFromFile();
 
-
 private:
+	bool CheckEdgeLine(const QString& line, int line_number, int number_of_vertices, int& from, int& to);
+	void CalculateDependencies(const Graph& graph);
 	Ui::Parallel_job_schedulingClass ui;
 };

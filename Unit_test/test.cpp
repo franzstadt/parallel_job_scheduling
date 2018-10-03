@@ -1,12 +1,11 @@
 #include "pch.h"
-#include "../Parallel_job_scheduling/Graph.h"
-#include "../Parallel_job_scheduling/Graph.cpp"
-#include "../Parallel_job_scheduling/Scheduler.h"
-#include "../Parallel_job_scheduling/Scheduler.cpp"
+#include "Graph.h"
+#include "Graph.cpp"
 #include <fstream>
 #include <string>
 #include <cstdlib>
 #include <vector>
+
 
 using std::range_error;
 using std::ifstream;
@@ -17,7 +16,7 @@ using std::vector;
 
 TEST(GraphTest, DeathTest1)
 {
-	EXPECT_THROW(Graph g(0), range_error);
+	EXPECT_THROW(Graph g(0), std::length_error);
 	EXPECT_THROW(Graph g2(-1), std::length_error);
 }
 
@@ -39,7 +38,7 @@ TEST(GraphTest, GetVerticesTest)
 	vector<int> v = g.GetVertices(1);
 }
 
-TEST(SchedulerTest, RegressionTest)
+TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 {
 	for (int i = 0; i < 3; i++)
 	{
@@ -54,11 +53,9 @@ TEST(SchedulerTest, RegressionTest)
 		while (input >> edge_str)
 			g.AddEdge(stoi(edge_str.substr(0, edge_str.find("->"))), stoi(edge_str.substr(edge_str.find("->") + 2, string::npos)));
 
-		Scheduler s;
-		bool has_cycle;
-		vector<vector<int>> dependency_tree = s.CalculateDependencyTree(g,has_cycle);
+		vector<vector<int>> dependency_tree;
 
-		EXPECT_EQ(has_cycle, false);
+		EXPECT_EQ(g.CalculateDependencyTree(dependency_tree), true);
 
 		string output_str;
 
@@ -87,11 +84,9 @@ TEST(SchedulerTest, CycleDetectionTest)
 	g.AddEdge(1, 2);
 	g.AddEdge(2, 0);
 
-	Scheduler s;
-	bool has_cycle;
-	vector<vector<int>> dependency_tree = s.CalculateDependencyTree(g, has_cycle);
+	vector<vector<int>> dependency_tree;
 
-	EXPECT_EQ(has_cycle, true);
+	EXPECT_EQ(g.CalculateDependencyTree(dependency_tree), false);
 
 	Graph g2(4);
 	
@@ -100,22 +95,15 @@ TEST(SchedulerTest, CycleDetectionTest)
 	g2.AddEdge(2, 3);
 	g2.AddEdge(3, 1);
 
-	dependency_tree = s.CalculateDependencyTree(g2, has_cycle);
-
-	EXPECT_EQ(has_cycle, true);
+	EXPECT_EQ(g2.CalculateDependencyTree(dependency_tree), false);
 
 	Graph g3(1);
 
 	g3.AddEdge(0, 0);
 
-	dependency_tree = s.CalculateDependencyTree(g3, has_cycle);
-
-	EXPECT_EQ(has_cycle, true);
+	EXPECT_EQ(g3.CalculateDependencyTree(dependency_tree), false);
 
 	Graph g4(1);
 
-	dependency_tree = s.CalculateDependencyTree(g4, has_cycle);
-
-	EXPECT_EQ(has_cycle, false);
+	EXPECT_EQ(g4.CalculateDependencyTree(dependency_tree), true);
 }
-

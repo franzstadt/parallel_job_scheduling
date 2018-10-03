@@ -36,12 +36,6 @@
     <ClCompile Include="Parallel_job_scheduling.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Scheduler.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Parallel_job_scheduling.h">
@@ -59,12 +53,6 @@
     </QtRcc>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Graph.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Scheduler.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Process.h">
       <Filter>Header Files</Filter>
     </ClInclude>
