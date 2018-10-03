@@ -7,7 +7,7 @@ using std::endl;
 using std::ifstream;
 
 int main()
-{
+{ 
 	JobScheduler j;
 	j.LoadGraphFromFile("input0.txt");
 	j.ScheduleJobs();
