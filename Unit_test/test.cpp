@@ -35,7 +35,7 @@ TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 {
 	for (int i = 0; i < 3; i++)
 	{
-		ifstream input("../Parallel_job_scheduling/input" + to_string(i) + ".txt");
+		ifstream input("../Parallel_job_scheduling_/input" + to_string(i) + ".txt");
 		
 		string vertices_count_str;
 		input >> vertices_count_str;
@@ -60,7 +60,7 @@ TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 			output_str += "\n";
 		}
 
-		ifstream output("../Parallel_job_scheduling/expected" + to_string(i) + ".txt");
+		ifstream output("../Parallel_job_scheduling_/expected" + to_string(i) + ".txt");
 
 		std::string control_str((std::istreambuf_iterator<char>(output)),
 			std::istreambuf_iterator<char>());

@@ -46,5 +46,8 @@
     <Text Include="expected2.txt">
       <Filter>Resource Files</Filter>
     </Text>
+    <Text Include="input3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>

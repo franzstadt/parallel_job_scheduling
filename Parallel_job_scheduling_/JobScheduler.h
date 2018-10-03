@@ -7,14 +7,12 @@
 
 class JobScheduler
 {
-	Graph m_graph;
 public:
-	void LoadGraphFromFile(const std::string& filename);
-	void ScheduleJobs() const;
+	bool ScheduleJobs(const std::string& filename) const;
 
 private:
 	bool CheckEdgeLine(const std::string& line, int line_number, int number_of_vertices, int& from, int& to) const;
-	void CalculateDependencies() const;
+	void CalculateDependencies(const Graph& graph) const;
 	bool CheckCondition(bool condition, int line_number, const std::string& reason, const std::string& line) const;
 	bool FileIsEmpty(std::ifstream& input) const
 	{

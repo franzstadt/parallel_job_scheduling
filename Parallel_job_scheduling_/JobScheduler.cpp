@@ -12,27 +12,27 @@ using std::string;
 using std::getline;
 using std::vector;
 
-void JobScheduler::LoadGraphFromFile(const std::string & filename)
+bool JobScheduler::ScheduleJobs(const std::string& filename) const
 {
 	ifstream input(filename);
 
 	if (CheckCondition(!input.is_open(), 0, "Unable to open file!", ""))
-		return;
+		return false;
 
 	if (CheckCondition(FileIsEmpty(input), 0, "Input File is empty!", ""))
-		return;
+		return false;
 
 	string line;
 
 	getline(input, line);
-	
+
 	if (CheckCondition(!IsDigit(line), 0, "The first line should define the numer of vertices! It must be digit!", ""))
-		return;
+		return false;
 
 	int number_of_vertices = stoi(line);
 
-	if(CheckCondition(number_of_vertices < 1, 0, "The number of vertices must be greather than 0!", ""))
-		return;
+	if (CheckCondition(number_of_vertices < 1, 0, "The number of vertices must be greather than 0!", ""))
+		return false;
 
 	try
 	{
@@ -51,18 +51,19 @@ void JobScheduler::LoadGraphFromFile(const std::string & filename)
 				has_error = true;
 			}
 		}
-		m_graph = graph;
 
+		if (!has_error)
+		{
+			cout << graph << endl;
+			CalculateDependencies(graph);
+		}
 	}
 	catch (const std::exception e)
 	{
 		cout << "Exception: " << e.what() << endl;
+		return false;
 	}
-}
-
-void JobScheduler::ScheduleJobs() const
-{
-	CalculateDependencies();
+	return true;
 }
 
 bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int number_of_vertices, int & from, int & to) const
@@ -97,17 +98,17 @@ bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int 
 	return true;
 }
 
-void JobScheduler::CalculateDependencies() const
+void JobScheduler::CalculateDependencies(const Graph& graph) const
 {
 	vector<vector<int>> dependency_tree;
-	if (m_graph.CalculateDependencyTree(dependency_tree))
+	if (graph.CalculateDependencyTree(dependency_tree))
 	{
-		cout << "Computational Graph:" << endl;
+		cout << "Dependency tree:" << endl;
 
-		for (int j = 0; j < dependency_tree.size(); j++)
+		for (size_t j = 0; j < dependency_tree.size(); j++)
 		{
 			cout << "Layer " << j << ": ";
-			for (int k = 0; k < dependency_tree[j].size(); k++)
+			for (size_t k = 0; k < dependency_tree[j].size(); k++)
 			{
 				cout << dependency_tree[j][k] << " ";
 			}

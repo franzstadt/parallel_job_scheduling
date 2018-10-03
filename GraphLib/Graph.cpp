@@ -1,10 +1,8 @@
 #include "Graph.h"
 
 using std::vector;
-
-Graph::Graph()
-{
-}
+using std::endl;
+using std::ostream;
 
 Graph::Graph(int vertices) : m_vertices_count(vertices), m_adjacency_list(vertices)
 {
@@ -26,7 +24,7 @@ int Graph::GetVerticesCount() const
 	return m_vertices_count;
 }
 
-const vector<int>& Graph::GetSuccessors(int vertex) const
+const vector<int>& Graph::GetSuccessors(size_t vertex) const
 {
 	if (vertex >= m_adjacency_list.size() || vertex < 0)
 		throw std::range_error("out of range");
@@ -83,3 +81,18 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 	return count == GetVerticesCount();
 }
 
+ ostream & operator<<(ostream & os, const Graph& graph)
+{
+	 os << "Computational graph:" << endl << "Number of vertices: " << graph.m_vertices_count << endl;
+	 for (size_t i = 0; i < graph.m_adjacency_list.size(); i++)
+	 {
+		 os << "Vertex " << i << " successors: ";
+		 for (size_t successor : graph.m_adjacency_list[i])
+		 {
+			 os << successor << " ";
+		 }
+		 os << endl;
+	 }
+
+	 return os;
+}

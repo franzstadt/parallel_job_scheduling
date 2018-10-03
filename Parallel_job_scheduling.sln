@@ -4,10 +4,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 15.0.28010.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Unit_test", "Unit_test\Unit_test.vcxproj", "{F3DA24B4-F43B-4A44-ADAE-C5A852827094}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1D392A87-5705-4D77-8B8A-A4814BD9E535} = {1D392A87-5705-4D77-8B8A-A4814BD9E535}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphLib", "GraphLib\GraphLib.vcxproj", "{1D392A87-5705-4D77-8B8A-A4814BD9E535}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parallel_job_scheduling", "Parallel_job_scheduling_\Parallel_job_scheduling_.vcxproj", "{B911CC24-F000-4554-9849-DEB43783956D}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1D392A87-5705-4D77-8B8A-A4814BD9E535} = {1D392A87-5705-4D77-8B8A-A4814BD9E535}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
