@@ -23,6 +23,7 @@
     <ProjectGuid>{B911CC24-F000-4554-9849-DEB43783956D}</ProjectGuid>
     <RootNamespace>Paralleljobscheduling</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <ProjectName>Parallel_job_scheduling</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
