@@ -70,7 +70,7 @@ void Parallel_job_scheduling::Start()
 						break;
 					}
 
-					if (first.toInt() < 0 || first.toInt() > number_of_vertices)
+					if (first.toInt() < 0 || first.toInt() >= number_of_vertices)
 					{
 						has_error = true;
 						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. First vertex is out of range:" + lines[i]);
@@ -86,30 +86,43 @@ void Parallel_job_scheduling::Start()
 						break;
 					}
 
-					if (second.toInt() < 0 || second.toInt() > number_of_vertices)
+					if (second.toInt() < 0 || second.toInt() >= number_of_vertices)
 					{
 						has_error = true;
 						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. Second vertex is out of range:" + lines[i]);
 						break;
 					}
-
-					graph.AddEdge(first.toInt(), second.toInt());
+					try
+					{
+						graph.AddEdge(first.toInt(), second.toInt());
+					}
+					catch (const std::exception e)
+					{
+						ui.output_text_edit->setText("Exception: " + QString(e.what()));
+						has_error = true;
+					}
 				}
 				if (!has_error)
 				{
 					Scheduler scheduler;
-					vector<vector<int>> topological_sort2 = scheduler.CalculateComputationalGraph(graph);
-					QString output = "Computational Graph:\n";
-					
-					for (int j = 0;j<topological_sort2.size();j++)
+					bool has_cycle;
+					vector<vector<int>> computational_graph = scheduler.CalculateComputationalGraph(graph,has_cycle);
+					if (!has_cycle)
 					{
-						output += "Layer "+QString::number(j)+": ";
-						for (int k = 0; k<topological_sort2[j].size(); k++)
-							output += QString::number(topological_sort2[j][k]) + " ";
-						output += "\n";
-					}
+						QString output = "Computational Graph:\n";
 
-					ui.output_text_edit->setText(output);
+						for (int j = 0; j < computational_graph.size(); j++)
+						{
+							output += "Layer " + QString::number(j) + ": ";
+							for (int k = 0; k < computational_graph[j].size(); k++)
+								output += QString::number(computational_graph[j][k]) + " ";
+							output += "\n";
+						}
+
+						ui.output_text_edit->setText(output);
+					}
+					else
+						ui.output_text_edit->setText("There is a cycle in the graph!");
 				}
 			}
 		}

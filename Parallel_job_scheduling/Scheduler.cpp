@@ -6,8 +6,9 @@ using std::vector;
 using std::stack;
 using std::queue;
 
-vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph) const
+vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph, bool& cycle_detected) const
 {
+	cycle_detected = false;
 	vector<int> in_degree(graph.GetVerticesCount(), 0);
 
 	for (int i = 0; i < graph.GetVerticesCount(); i++)
@@ -17,17 +18,20 @@ vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph) 
 	vector<vector<int>> output;
 	vector<int> vertices;
 
-	vector<int> layer_0_elements;
+	vector<int> first_layer;
 	for (int i = 0; i < graph.GetVerticesCount(); i++)
 		if (in_degree[i] == 0)
 		{
 			vertices.push_back(i);
-			layer_0_elements.push_back(i);
+			first_layer.push_back(i);
 		}
 
-	output.push_back(layer_0_elements);
+	output.push_back(first_layer);
 
-	vector<int> top_order;
+	int count = vertices.size();
+
+	if (vertices.empty())
+		cycle_detected = true;
 
 	while (!vertices.empty())
 	{
@@ -36,12 +40,19 @@ vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph) 
 		for (const auto& u : vertices)
 			for (const auto&v : graph.GetVertices(u))
 				if (--in_degree[v] == 0)
+				{
 					neighbours.push_back(v);
+					count++;
+				}
 		
 		vertices = neighbours;
 		if(!neighbours.empty())
 			output.push_back(neighbours);
 	}
+
+	if (count != graph.GetVerticesCount())
+		cycle_detected = true;
+
 
 	return output;
 }

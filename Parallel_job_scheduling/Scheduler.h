@@ -6,6 +6,6 @@
 class Scheduler
 {
 public:
-	std::vector<std::vector<int>> CalculateComputationalGraph(const Graph& graph) const;
+	std::vector<std::vector<int>> CalculateComputationalGraph(const Graph& graph, bool& cycle_detected) const;
 };
 
