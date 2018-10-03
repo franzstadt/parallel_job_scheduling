@@ -56,12 +56,6 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 
 	int count = vertices.size();
 
-	if (count == GetVerticesCount())
-		return true;
-
-	if (vertices.empty())
-		return false;
-
 	while (!vertices.empty())
 	{
 		dependency_tree.push_back(vertices);
@@ -79,9 +73,9 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 			}
 		}
 
-		vertices = neighbours;
+		vertices.swap(neighbours);
 	}
 
-	return count == GetVerticesCount() ? true : false;
+	return count == GetVerticesCount();
 }
 

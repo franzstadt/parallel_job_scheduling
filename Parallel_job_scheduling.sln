@@ -12,6 +12,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Unit_test", "Unit_test\Unit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GraphLib", "GraphLib\GraphLib.vcxproj", "{1D392A87-5705-4D77-8B8A-A4814BD9E535}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Parallel_job_scheduling_", "Parallel_job_scheduling_\Parallel_job_scheduling_.vcxproj", "{B911CC24-F000-4554-9849-DEB43783956D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -58,6 +60,18 @@ Global
 		{1D392A87-5705-4D77-8B8A-A4814BD9E535}.Release|x64.Build.0 = Release|x64
 		{1D392A87-5705-4D77-8B8A-A4814BD9E535}.Release|x86.ActiveCfg = Release|Win32
 		{1D392A87-5705-4D77-8B8A-A4814BD9E535}.Release|x86.Build.0 = Release|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|Win32.Build.0 = Debug|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|x64.ActiveCfg = Debug|x64
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|x64.Build.0 = Debug|x64
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|x86.ActiveCfg = Debug|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Debug|x86.Build.0 = Debug|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|Win32.ActiveCfg = Release|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|Win32.Build.0 = Release|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|x64.ActiveCfg = Release|x64
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|x64.Build.0 = Release|x64
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|x86.ActiveCfg = Release|Win32
+		{B911CC24-F000-4554-9849-DEB43783956D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
