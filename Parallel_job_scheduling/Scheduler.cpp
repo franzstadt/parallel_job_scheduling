@@ -6,7 +6,7 @@ using std::vector;
 using std::stack;
 using std::queue;
 
-vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph, bool& cycle_detected) const
+vector<vector<int>> Scheduler::CalculateDependencyTree(const Graph & graph, bool& cycle_detected) const
 {
 	cycle_detected = false;
 	vector<int> in_degree(graph.GetVerticesCount(), 0);
@@ -29,6 +29,9 @@ vector<vector<int>> Scheduler::CalculateComputationalGraph(const Graph & graph, 
 	output.push_back(first_layer);
 
 	int count = vertices.size();
+
+	if (count == graph.GetVerticesCount())
+		return output;
 
 	if (vertices.empty())
 		cycle_detected = true;

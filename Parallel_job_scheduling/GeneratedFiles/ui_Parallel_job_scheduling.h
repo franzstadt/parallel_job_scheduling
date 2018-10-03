@@ -107,7 +107,7 @@ public:
     {
         Parallel_job_schedulingClass->setWindowTitle(QApplication::translate("Parallel_job_schedulingClass", "Parallel job scheduling", nullptr));
         open_file_btn->setText(QApplication::translate("Parallel_job_schedulingClass", "Read Input Graph From File", nullptr));
-        pushButton->setText(QApplication::translate("Parallel_job_schedulingClass", "Calculate Computational Graph", nullptr));
+        pushButton->setText(QApplication::translate("Parallel_job_schedulingClass", "Calculate Dependency Tree", nullptr));
         clear_fields->setText(QApplication::translate("Parallel_job_schedulingClass", "Clear Fields", nullptr));
     } // retranslateUi
 

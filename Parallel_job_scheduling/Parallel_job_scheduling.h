@@ -11,7 +11,8 @@ public:
 	Parallel_job_scheduling(QWidget *parent = Q_NULLPTR);
 
 public slots:
-	void Start();
+	void ScheduleJobs();
+	void ClearFields();
 	void LoadGraphFromFile();
 
 

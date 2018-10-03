@@ -16,22 +16,23 @@ Parallel_job_scheduling::Parallel_job_scheduling(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(Start()));
+	connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(ScheduleJobs()));
 	connect(ui.open_file_btn, SIGNAL(clicked()), this, SLOT(LoadGraphFromFile()));
-	connect(ui.clear_fields, SIGNAL(clicked()), this, SLOT(ClearFileds()));
+	connect(ui.clear_fields, SIGNAL(clicked()), this, SLOT(ClearFields()));
 }
 
-void Parallel_job_scheduling::Start()
+void Parallel_job_scheduling::ScheduleJobs()
 {
 	ui.output_text_edit->setText("");
-	if(ui.input_text_edit->toPlainText().isEmpty())
+	if (ui.input_text_edit->toPlainText().isEmpty())
 		ui.output_text_edit->setText("Input empty!");
 	else
 	{
 		QStringList lines = ui.input_text_edit->toPlainText().split("\n", QString::SkipEmptyParts);
 
 		QRegExp re("\\d*");
-	
+
+
 		if (!re.exactMatch(lines[0]))
 			ui.output_text_edit->setText("The first line should define the numer of vertices! It must be digit!");
 		else
@@ -41,92 +42,99 @@ void Parallel_job_scheduling::Start()
 				ui.output_text_edit->setText("The number of vertices must be greather than 0!");
 			else
 			{
-				QString s;
-				bool has_error = false;
-				
-				Graph graph(lines[0].toInt());
-				for (int i = 1; i < lines.size(); i++)
+				try
 				{
-					int arrow_count = lines[i].count("->");
-					if (arrow_count == 0)
-					{
-						has_error = true;
-						ui.output_text_edit->setText("The "+QString::number(i)+" line is wrong. The '->' is missing. Line:" +lines[i]);
-						break;
-					}
-					else if (arrow_count > 1)
-					{
-						has_error = true;
-						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. It contains more '->'. Line:" + lines[i]);
-						break;
-					}
-					
-					QString first = lines[i].left(lines[i].toStdString().find("->"));
+					QString s;
+					bool has_error = false;
 
-					if (!re.exactMatch(first) || first.isEmpty())
+					Graph graph(lines[0].toInt());
+					for (int i = 1; i < lines.size(); i++)
 					{
-						has_error = true;
-						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. First vertex is not a digit:" + lines[i]);
-						break;
-					}
-
-					if (first.toInt() < 0 || first.toInt() >= number_of_vertices)
-					{
-						has_error = true;
-						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. First vertex is out of range:" + lines[i]);
-						break;
-					}
-
-					QString second = lines[i].right(lines[i].count()-lines[i].toStdString().find("->")-2);
-
-					if (!re.exactMatch(second) || second.isEmpty())
-					{
-						has_error = true;
-						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. Second vertex is not a digit:" + lines[i]);
-						break;
-					}
-
-					if (second.toInt() < 0 || second.toInt() >= number_of_vertices)
-					{
-						has_error = true;
-						ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. Second vertex is out of range:" + lines[i]);
-						break;
-					}
-					try
-					{
-						graph.AddEdge(first.toInt(), second.toInt());
-					}
-					catch (const std::exception e)
-					{
-						ui.output_text_edit->setText("Exception: " + QString(e.what()));
-						has_error = true;
-					}
-				}
-				if (!has_error)
-				{
-					Scheduler scheduler;
-					bool has_cycle;
-					vector<vector<int>> computational_graph = scheduler.CalculateComputationalGraph(graph,has_cycle);
-					if (!has_cycle)
-					{
-						QString output = "Computational Graph:\n";
-
-						for (int j = 0; j < computational_graph.size(); j++)
+						int arrow_count = lines[i].count("->");
+						if (arrow_count == 0)
 						{
-							output += "Layer " + QString::number(j) + ": ";
-							for (int k = 0; k < computational_graph[j].size(); k++)
-								output += QString::number(computational_graph[j][k]) + " ";
-							output += "\n";
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. The '->' is missing. Line:" + lines[i]);
+							break;
+						}
+						else if (arrow_count > 1)
+						{
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. It contains more '->'. Line:" + lines[i]);
+							break;
 						}
 
-						ui.output_text_edit->setText(output);
+						QString first = lines[i].left(lines[i].toStdString().find("->"));
+
+						if (!re.exactMatch(first) || first.isEmpty())
+						{
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. First vertex is not a digit:" + lines[i]);
+							break;
+						}
+
+						if (first.toInt() < 0 || first.toInt() >= number_of_vertices)
+						{
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. First vertex is out of range:" + lines[i]);
+							break;
+						}
+
+						QString second = lines[i].right(lines[i].count() - lines[i].toStdString().find("->") - 2);
+
+						if (!re.exactMatch(second) || second.isEmpty())
+						{
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. Second vertex is not a digit:" + lines[i]);
+							break;
+						}
+
+						if (second.toInt() < 0 || second.toInt() >= number_of_vertices)
+						{
+							has_error = true;
+							ui.output_text_edit->setText("The " + QString::number(i) + " line is wrong. Second vertex is out of range:" + lines[i]);
+							break;
+						}
+
+						graph.AddEdge(first.toInt(), second.toInt());
 					}
-					else
-						ui.output_text_edit->setText("There is a cycle in the graph!");
+
+					if (!has_error)
+					{
+						Scheduler scheduler;
+						bool has_cycle;
+						vector<vector<int>> dependency_tree = scheduler.CalculateDependencyTree(graph, has_cycle);
+						if (!has_cycle)
+						{
+							QString output = "Computational Graph:\n";
+
+							for (int j = 0; j < dependency_tree.size(); j++)
+							{
+								output += "Layer " + QString::number(j) + ": ";
+								for (int k = 0; k < dependency_tree[j].size(); k++)
+									output += QString::number(dependency_tree[j][k]) + " ";
+								output += "\n";
+							}
+
+							ui.output_text_edit->setText(output);
+						}
+						else
+							ui.output_text_edit->setText("There is a cycle in the graph!");
+					}
+				}
+				catch (const std::exception e)
+				{
+					ui.output_text_edit->setText("Exception: " + QString(e.what()));
 				}
 			}
 		}
 	}
+}
+
+void Parallel_job_scheduling::ClearFields()
+{
+	ui.input_text_edit->clear();
+	ui.output_text_edit->clear();
 }
 
 void Parallel_job_scheduling::LoadGraphFromFile()
@@ -148,8 +156,7 @@ void Parallel_job_scheduling::LoadGraphFromFile()
 			return;
 		}
 
-		ui.input_text_edit->clear();
-		ui.output_text_edit->clear();
+		ClearFields();
 
 		QTextStream stream(&file);
 		while (!stream.atEnd())
