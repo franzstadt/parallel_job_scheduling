@@ -22,7 +22,7 @@ int Graph::GetVerticesCount() const
 	return m_vertices_count;
 }
 
-const vector<int>& Graph::GetVertices(int vertex) const
+const vector<int>& Graph::GetSuccessors(int vertex) const
 {
 	if (vertex >= m_adjacency_list.size() || vertex < 0)
 		throw std::range_error("out of range");
@@ -38,7 +38,7 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 
 	for (int i = 0; i < GetVerticesCount(); i++)
 	{
-		for (const auto& vertex : GetVertices(i))
+		for (int vertex : GetSuccessors(i))
 		{
 			in_degree[vertex]++;
 		}
@@ -54,8 +54,6 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 		}
 	}
 
-	dependency_tree.push_back(vertices);
-
 	int count = vertices.size();
 
 	if (count == GetVerticesCount())
@@ -66,11 +64,12 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 
 	while (!vertices.empty())
 	{
+		dependency_tree.push_back(vertices);
 		vector<int> neighbours;
 
-		for (const auto& u : vertices)
+		for (int u : vertices)
 		{
-			for (const auto&v : GetVertices(u))
+			for (int v : GetSuccessors(u))
 			{
 				if (--in_degree[v] == 0)
 				{
@@ -81,15 +80,8 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 		}
 
 		vertices = neighbours;
-		if (!neighbours.empty())
-		{
-			dependency_tree.push_back(neighbours);
-		}
 	}
 
-	if (count != GetVerticesCount())
-		return false;
-
-	return true;
+	return count == GetVerticesCount() ? true : false;
 }
 

@@ -30,13 +30,6 @@ TEST(GraphTest, DeathTest2)
 	EXPECT_THROW(g.AddEdge(0,1), range_error);
 }
 
-TEST(GraphTest, GetVerticesTest)
-{
-	Graph g(5);
-
-	g.AddEdge(1,2);
-	vector<int> v = g.GetVertices(1);
-}
 
 TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 {
@@ -59,10 +52,10 @@ TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 
 		string output_str;
 
-		for (int j = 0; j < dependency_tree.size(); j++)
+		for (size_t j = 0; j < dependency_tree.size(); j++)
 		{
 			output_str += "Layer " + to_string(j) + ": ";
-			for (int k = 0; k < dependency_tree[j].size(); k++)
+			for (size_t k = 0; k < dependency_tree[j].size(); k++)
 				output_str += to_string(dependency_tree[j][k]) + " ";
 			output_str += "\n";
 		}

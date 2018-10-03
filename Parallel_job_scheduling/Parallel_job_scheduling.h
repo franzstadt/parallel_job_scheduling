@@ -19,5 +19,6 @@ public slots:
 private:
 	bool CheckEdgeLine(const QString& line, int line_number, int number_of_vertices, int& from, int& to);
 	void CalculateDependencies(const Graph& graph);
+	bool CheckCondition(bool condition, int line_number, const QString& reason, const QString& line);
 	Ui::Parallel_job_schedulingClass ui;
 };

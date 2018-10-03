@@ -53,7 +53,7 @@ void Parallel_job_scheduling::ScheduleJobs()
 					bool has_error = false;
 
 					Graph graph(lines[0].toInt());
-					for (int i = 1; i < lines.size(); i++)
+					for (int i = 1; !has_error && i < lines.size(); i++)
 					{
 						int from, to;
 						if (CheckEdgeLine(lines[i], i, number_of_vertices, from, to))
@@ -63,7 +63,6 @@ void Parallel_job_scheduling::ScheduleJobs()
 						else
 						{
 							has_error = true;
-							break;
 						}
 					}
 
@@ -112,48 +111,42 @@ void Parallel_job_scheduling::LoadGraphFromFile()
 	}
 }
 
+bool Parallel_job_scheduling::CheckCondition(bool condition, int line_number, const QString& reason, const QString& line)
+{
+	if (condition)
+	{
+		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. Reason: "+reason+" Line:" + line);
+		return true;
+	}
+	return false;
+}
+
 bool Parallel_job_scheduling::CheckEdgeLine(const QString& line, int line_number, int number_of_vertices, int& from, int& to)
 {
 	int arrow_count = line.count("->");
-	if (arrow_count == 0)
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. The '->' is missing. Line:" + line);
-		return false;
-	}
-	else if (arrow_count > 1)
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. It contains more '->'. Line:" + line);
-		return false;
-	}
 
-	QString first = line.left(line.toStdString().find("->"));
+	if (CheckCondition(arrow_count == 0, line_number, QString("The '->' is missing."), line))
+		return false;
+
+	if (CheckCondition(arrow_count > 1, line_number, QString("It contains more '->'."), line))
+		return false;
+
+	QString first = line.left(line.indexOf("->"));
 	QRegExp re("\\d*");
 
-	if (!re.exactMatch(first) || first.isEmpty())
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. First vertex is not a digit:" + line);
+	if (CheckCondition(!re.exactMatch(first) || first.isEmpty(), line_number, QString("First vertex is not a digit."), line))
 		return false;
-	}
 
-	if (first.toInt() < 0 || first.toInt() >= number_of_vertices)
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. First vertex is out of range:" + line);
+	if (CheckCondition(first.toInt() < 0 || first.toInt() >= number_of_vertices, line_number, QString("First vertex is out of range."), line))
 		return false;
-	}
 
-	QString second = line.right(line.count() - line.toStdString().find("->") - 2);
+	QString second = line.right(line.count() - line.indexOf("->") - 2);
 
-	if (!re.exactMatch(second) || second.isEmpty())
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. Second vertex is not a digit:" + line);
+	if (CheckCondition(!re.exactMatch(second) || second.isEmpty(), line_number, QString("Second vertex is not a digit."), line))
 		return false;
-	}
 
-	if (second.toInt() < 0 || second.toInt() >= number_of_vertices)
-	{
-		ui.output_text_edit->setText("The " + QString::number(line_number) + " line is wrong. Second vertex is out of range:" + line);
+	if (CheckCondition(second.toInt() < 0 || second.toInt() >= number_of_vertices, line_number, QString("Second vertex is out of range."), line))
 		return false;
-	}
 
 	from = first.toInt();
 	to = second.toInt();
