@@ -1,23 +1,131 @@
 #include "JobScheduler.h"
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <algorithm>
+#include <vector>
+
+using std::cout;
+using std::endl;
+using std::ifstream;
+using std::string;
+using std::getline;
+using std::vector;
 
 void JobScheduler::LoadGraphFromFile(const std::string & filename)
 {
+	ifstream input(filename);
+
+	if (CheckCondition(!input.is_open(), 0, "Unable to open file!", ""))
+		return;
+
+	if (CheckCondition(FileIsEmpty(input), 0, "Input File is empty!", ""))
+		return;
+
+	string line;
+
+	getline(input, line);
+	
+	if (CheckCondition(!IsDigit(line), 0, "The first line should define the numer of vertices! It must be digit!", ""))
+		return;
+
+	int number_of_vertices = stoi(line);
+
+	if(CheckCondition(number_of_vertices < 1, 0, "The number of vertices must be greather than 0!", ""))
+		return;
+
+	try
+	{
+		bool has_error = false;
+		Graph graph(number_of_vertices);
+
+		for (int i = 1; !has_error && getline(input, line); i++)
+		{
+			int from, to;
+			if (CheckEdgeLine(line, i, number_of_vertices, from, to))
+			{
+				graph.AddEdge(from, to);
+			}
+			else
+			{
+				has_error = true;
+			}
+		}
+		m_graph = graph;
+
+	}
+	catch (const std::exception e)
+	{
+		cout << "Exception: " << e.what() << endl;
+	}
 }
 
-void JobScheduler::ScheduleJobs()
+void JobScheduler::ScheduleJobs() const
 {
+	CalculateDependencies();
 }
 
-bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int number_of_vertices, int & from, int & to)
+bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int number_of_vertices, int & from, int & to) const
 {
-	return false;
+	int arrow_pos = line.find("->");
+
+	if (CheckCondition(arrow_pos == string::npos, line_number, "The '->' is missing.", line))
+		return false;
+
+	arrow_pos = line.find("->", arrow_pos + 1);
+	if (CheckCondition(arrow_pos != string::npos, line_number, "It contains more '->'.", line))
+		return false;
+
+	string first = line.substr(0, line.find("->"));
+
+	if (CheckCondition(!IsDigit(first) || first.empty(), line_number, "First vertex is not a digit.", line))
+		return false;
+
+	from = stoi(first);
+	if (CheckCondition(from < 0 || from >= number_of_vertices, line_number, "First vertex is out of range.", line))
+		return false;
+
+	string second = line.substr(line.find("->") + 2, string::npos);
+
+	if (CheckCondition(!IsDigit(second) || second.empty(), line_number, "Second vertex is not a digit.", line))
+		return false;
+
+	to = stoi(second);
+	if (CheckCondition(to < 0 || to >= number_of_vertices, line_number, "Second vertex is out of range.", line))
+		return false;
+
+	return true;
 }
 
-void JobScheduler::CalculateDependencies(const std::string & graph)
+void JobScheduler::CalculateDependencies() const
 {
+	vector<vector<int>> dependency_tree;
+	if (m_graph.CalculateDependencyTree(dependency_tree))
+	{
+		cout << "Computational Graph:" << endl;
+
+		for (int j = 0; j < dependency_tree.size(); j++)
+		{
+			cout << "Layer " << j << ": ";
+			for (int k = 0; k < dependency_tree[j].size(); k++)
+			{
+				cout << dependency_tree[j][k] << " ";
+			}
+			cout << endl;
+		}
+	}
+	else
+	{
+		cout << "There is a cycle in the graph!" << endl;
+	}
 }
 
-bool JobScheduler::CheckCondition(bool condition, int line_number, const std::string & reason, const std::string & line)
+bool JobScheduler::CheckCondition(bool condition, int line_number, const std::string & reason, const std::string & line) const
 {
+	if (condition)
+	{
+		cout << "The " << line_number << " line is wrong. Reason: " << reason << " Line:" << line << endl;
+		return true;
+	}
 	return false;
 }

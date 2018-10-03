@@ -6,6 +6,7 @@ class Graph
 	int m_vertices_count;
 	std::vector<std::vector<int>> m_adjacency_list;
 public:
+	Graph();
 	Graph(int vertices);
 	void AddEdge(int from, int to);
 	int GetVerticesCount() const;

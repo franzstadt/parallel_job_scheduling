@@ -126,6 +126,14 @@
   <ItemGroup>
     <ClInclude Include="JobScheduler.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="expected0.txt" />
+    <Text Include="expected1.txt" />
+    <Text Include="expected2.txt" />
+    <Text Include="input0.txt" />
+    <Text Include="input1.txt" />
+    <Text Include="input2.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

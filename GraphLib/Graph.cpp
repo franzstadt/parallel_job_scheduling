@@ -2,6 +2,10 @@
 
 using std::vector;
 
+Graph::Graph()
+{
+}
+
 Graph::Graph(int vertices) : m_vertices_count(vertices), m_adjacency_list(vertices)
 {
 	if (vertices < 1)
