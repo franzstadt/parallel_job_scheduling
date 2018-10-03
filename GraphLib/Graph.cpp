@@ -46,17 +46,15 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 
 	vector<int> vertices;
 
-	vector<int> first_layer;
 	for (int i = 0; i < GetVerticesCount(); i++)
 	{
 		if (in_degree[i] == 0)
 		{
 			vertices.push_back(i);
-			first_layer.push_back(i);
 		}
 	}
 
-	dependency_tree.push_back(first_layer);
+	dependency_tree.push_back(vertices);
 
 	int count = vertices.size();
 
@@ -91,7 +89,6 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 
 	if (count != GetVerticesCount())
 		return false;
-
 
 	return true;
 }
