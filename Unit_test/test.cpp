@@ -46,7 +46,7 @@ TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 		while (input >> edge_str)
 			g.AddEdge(stoi(edge_str.substr(0, edge_str.find("->"))), stoi(edge_str.substr(edge_str.find("->") + 2, string::npos)));
 
-		vector<vector<int>> dependency_tree;
+		dependency_tree_t dependency_tree;
 
 		EXPECT_EQ(g.CalculateDependencyTree(dependency_tree), true);
 

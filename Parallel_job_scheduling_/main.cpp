@@ -14,10 +14,10 @@ int main()
 {
 	cout << "Insert file name(exit 'q'): ";
 	string filename;
-	cin >> filename;
 
 	JobScheduler scheduler;
 	
+	cin >> filename;
 	while (filename != "q" && !scheduler.ScheduleJobs(filename))
 	{
 		cout << "Insert file name(exit 'q'): ";

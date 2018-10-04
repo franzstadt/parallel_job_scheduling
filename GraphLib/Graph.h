@@ -1,6 +1,10 @@
 #pragma once
 #include <vector>
-#include <fstream>
+#include <ostream>
+
+typedef std::vector<int> layer_t;
+typedef std::vector<layer_t> dependency_tree_t;
+
 
 class Graph
 {
@@ -11,9 +15,10 @@ public:
 	void AddEdge(int from, int to);
 	int GetVerticesCount() const;
 	const std::vector<int>& GetSuccessors(size_t vertex) const;
+
 	//Calculates the dependency tree of a computational Graph. 
 	//The function checks of DAG property also. 
 	//It returns with false if a cycle is detected.
-	bool CalculateDependencyTree(std::vector<std::vector<int>>& dependency_tree) const;
+	bool CalculateDependencyTree(dependency_tree_t& dependency_tree) const;
 	friend std::ostream& operator<<(std::ostream &os,const Graph& graph); 
 };

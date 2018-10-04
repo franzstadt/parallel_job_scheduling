@@ -58,7 +58,7 @@ bool JobScheduler::ScheduleJobs(const std::string& filename) const
 			CalculateDependencies(graph);
 		}
 	}
-	catch (const std::exception e)
+	catch (const std::exception& e)
 	{
 		cout << "Exception: " << e.what() << endl;
 		return false;
@@ -100,17 +100,19 @@ bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int 
 
 void JobScheduler::CalculateDependencies(const Graph& graph) const
 {
-	vector<vector<int>> dependency_tree;
+	dependency_tree_t dependency_tree;
 	if (graph.CalculateDependencyTree(dependency_tree))
 	{
 		cout << "Dependency tree:" << endl;
 
 		for (size_t j = 0; j < dependency_tree.size(); j++)
 		{
+			const layer_t& layer_j = dependency_tree[j];
+
 			cout << "Layer " << j << ": ";
-			for (size_t k = 0; k < dependency_tree[j].size(); k++)
+			for (size_t k = 0; k < layer_j.size(); k++)
 			{
-				cout << dependency_tree[j][k] << " ";
+				cout << layer_j[k] << " ";
 			}
 			cout << endl;
 		}

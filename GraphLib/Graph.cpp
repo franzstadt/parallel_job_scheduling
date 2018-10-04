@@ -14,7 +14,9 @@ void Graph::AddEdge(int from, int to)
 {
 	if (from >= m_vertices_count || from < 0 ||
 		to >= m_vertices_count || to < 0)
+	{
 		throw std::range_error("out of range");
+	}
 
 	m_adjacency_list[from].push_back(to);
 }
@@ -32,7 +34,7 @@ const vector<int>& Graph::GetSuccessors(size_t vertex) const
 	return m_adjacency_list[vertex];
 }
 
-bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
+bool Graph::CalculateDependencyTree(dependency_tree_t& dependency_tree) const
 {
 	dependency_tree.clear();
 
@@ -75,7 +77,7 @@ bool Graph::CalculateDependencyTree(vector<vector<int>>& dependency_tree) const
 			}
 		}
 
-		vertices.swap(neighbours);
+		vertices = std::move(neighbours);
 	}
 
 	return count == GetVerticesCount();
