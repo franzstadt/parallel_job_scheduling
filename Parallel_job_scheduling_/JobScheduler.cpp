@@ -68,7 +68,7 @@ bool JobScheduler::ScheduleJobs(const std::string& filename) const
 
 bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int number_of_vertices, int & from, int & to) const
 {
-	int arrow_pos = line.find("->");
+	size_t arrow_pos = line.find("->");
 
 	if (CheckCondition(arrow_pos == string::npos, line_number, "The '->' is missing.", line))
 		return false;

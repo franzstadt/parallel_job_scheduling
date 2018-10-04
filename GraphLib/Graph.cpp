@@ -58,7 +58,7 @@ bool Graph::CalculateDependencyTree(dependency_tree_t& dependency_tree) const
 		}
 	}
 
-	int count = vertices.size();
+	size_t count = vertices.size();
 
 	while (!vertices.empty())
 	{
