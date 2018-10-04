@@ -149,6 +149,7 @@
     <Text Include="expected0.txt" />
     <Text Include="expected1.txt" />
     <Text Include="expected2.txt" />
+    <Text Include="expected3.txt" />
     <Text Include="input0.txt" />
     <Text Include="input1.txt" />
     <Text Include="input2.txt" />

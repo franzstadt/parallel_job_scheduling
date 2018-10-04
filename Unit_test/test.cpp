@@ -33,10 +33,13 @@ TEST(GraphTest, DeathTest2)
 
 TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 {
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 4; i++)
 	{
 		ifstream input("../Parallel_job_scheduling_/input" + to_string(i) + ".txt");
 		
+		if (!input.is_open())
+			input.open("../../Parallel_job_scheduling_/input" + to_string(i) + ".txt");
+
 		string vertices_count_str;
 		input >> vertices_count_str;
 
@@ -61,6 +64,9 @@ TEST(SchedulerTest, CheckWithPrecalculatedInputs)
 		}
 
 		ifstream output("../Parallel_job_scheduling_/expected" + to_string(i) + ".txt");
+		
+		if (!output.is_open())
+			output.open("../../Parallel_job_scheduling_/expected" + to_string(i) + ".txt");
 
 		std::string control_str((std::istreambuf_iterator<char>(output)),
 			std::istreambuf_iterator<char>());
@@ -77,7 +83,7 @@ TEST(SchedulerTest, CycleDetectionTest)
 	g.AddEdge(1, 2);
 	g.AddEdge(2, 0);
 
-	vector<vector<int>> dependency_tree;
+	dependency_tree_t dependency_tree;
 
 	EXPECT_EQ(g.CalculateDependencyTree(dependency_tree), false);
 

@@ -18,7 +18,7 @@ private:
 	{
 		return input.peek() == std::ifstream::traits_type::eof();
 	}
-	bool IsDigit(const std::string& str) const
+	bool IsDigits(const std::string& str) const
 	{
 		return !str.empty() && std::find_if(str.begin(), str.end(), [](char c) { return !std::isdigit(c); }) == str.end();
 	}

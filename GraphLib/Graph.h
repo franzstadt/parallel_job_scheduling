@@ -5,7 +5,6 @@
 typedef std::vector<int> layer_t;
 typedef std::vector<layer_t> dependency_tree_t;
 
-
 class Graph
 {
 	int m_vertices_count;

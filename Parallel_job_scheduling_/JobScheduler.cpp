@@ -26,7 +26,7 @@ bool JobScheduler::ScheduleJobs(const std::string& filename) const
 
 	getline(input, line);
 
-	if (CheckCondition(!IsDigit(line), 0, "The first line should define the numer of vertices! It must be digit!", ""))
+	if (CheckCondition(!IsDigits(line), 0, "The first line should define the numer of vertices! It must be digit!", ""))
 		return false;
 
 	int number_of_vertices = stoi(line);
@@ -79,7 +79,7 @@ bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int 
 
 	string first = line.substr(0, line.find("->"));
 
-	if (CheckCondition(!IsDigit(first) || first.empty(), line_number, "First vertex is not a digit.", line))
+	if (CheckCondition(!IsDigits(first) || first.empty(), line_number, "First vertex is not a digit.", line))
 		return false;
 
 	from = stoi(first);
@@ -88,7 +88,7 @@ bool JobScheduler::CheckEdgeLine(const std::string & line, int line_number, int 
 
 	string second = line.substr(line.find("->") + 2, string::npos);
 
-	if (CheckCondition(!IsDigit(second) || second.empty(), line_number, "Second vertex is not a digit.", line))
+	if (CheckCondition(!IsDigits(second) || second.empty(), line_number, "Second vertex is not a digit.", line))
 		return false;
 
 	to = stoi(second);
